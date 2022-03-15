@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="row">
+  <div class="col-sm-12col-md-8 col-lg-11 px-5 px-sm-0 mx-auto">
+
+<h4>注文情報確認</h4>
+<div class="row">
+ <div class="col-8"  style="margin-top: 50px;">
+       
+		<table class="table table-bordered cart-table">
+			<thead class="thead-light">
+			    <tr style="background-color:#F5F5F5;">
+					<th>商品名</th>
+					<th>単価(税込)</th>
+					<th>数量</th>
+					<th>小計</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+ 			 <% @cart_items.each do |cart_item| %>
+			    <tr>
+					<td><%= cart_item.item.name %></td>
+					<td><%= (cart_item.item.price * 1.1).to_i %></td>
+					<td><%= cart_item.amount %></td>	
+					<td><%= (Item.find(cart_item.item_id).price * 1.1 * cart_item.amount).to_i  %></td>
+					</tr>
+					<% end %>
+
+			  
+			  </tbody>
+		</table>
+		</div>
+	  
+	<div class="col-4"  style="margin-top: 50px;">
+		<table class="table table-bordered">
+
+		<thead class="thead-light">
+			    <tr style="background-color:#F5F5F5;">
+					<th>送料</th>
+					<td><%= @order.postage %></td>
+				</tr>
+				 <tr style="background-color:#F5F5F5;">
+					<th>商品合計</th>
+					<td><%= @sum %> </td>
+				</tr>
+				<tr style="background-color:#F5F5F5;">
+					<th>請求額</th>
+					<td><%= @sum + @order.postage %></td>
+				</tr>
+		</thead>
+	   	</table>
+	
+	</div>
+	</div>
+ </div>
+</div>
+	
+		
+
+      
+	
+<div class="row">
+		<table class="table" style="margin-top: 50px;">
+          <tbody>
+            <tr>
+              <th scope="row">支払い方法</th>
+              <td><%= @order.method_payment_i18n %></td>
+            </tr>
+            <tr>
+              <th scope="row">お届け先</th>
+              <td>
+                <p><%= @order.postal_code %>&emsp;<%= @order.shipping_address %></p>
+                <p><%= @order.name %></p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+	 </div>
+        <%= form_with(model: @order, url:orders_path, method: :post, local: true) do |f| %>
+        	<%= f.hidden_field :method_payment, :value => @order.method_payment %>
+        	<%= f.hidden_field :postal_code, :value => @order.postal_code %>
+        	<%= f.hidden_field :name, :value => @order.name %>
+        	<%= f.hidden_field :shipping_address, :value => @order.shipping_address %>
+        	<%= f.hidden_field :amount_claimed, :value => @sum + @order.postage %>
+        	<%= f.hidden_field :order_statuses, :value => @order.order_statuses %>
+              <%= f.submit "注文を確定する",class:"btn btn-success col-xs-12" %>
+        <% end %>
+      </div>
+    </div>
+    </div>

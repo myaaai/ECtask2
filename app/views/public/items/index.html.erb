@@ -1,0 +1,28 @@
+
+<div class="container">
+ 
+  <h2><%= "#{@index}一覧 （全#{@items.count}件）" %></h2>
+ 
+ <div class="row">
+
+
+       
+          
+             
+                   <% @items.each do |item| %>
+                   <div class="col-lg-3">
+                   <%= link_to item_path(item) do %>
+                            <% if item.image.attached? %>
+                            <%= image_tag item.image, size: "240x170" %>
+                            <% else %>
+                            <%= image_tag 'no_image', size: "240x170" %>
+                            <% end %> 
+                            <% end %>
+                        <%= link_to item.name, item_path(item) %>
+                   ￥<%= (item.price * 1.1).to_i %>
+                    
+                   </div> 
+        <% end %>
+   
+</div>
+</div>

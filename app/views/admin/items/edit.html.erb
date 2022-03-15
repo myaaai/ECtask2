@@ -1,0 +1,44 @@
+<div class="container">
+ <div class="row">
+  <div class="col-sm-12col-md-8 col-lg-11 px-5 px-sm-0 mx-auto">
+
+
+
+<h3>商品編集</h3>
+
+<%= form_with model: @item, url: admin_item_path(@item), method: :patch, local: true do |f| %>
+
+ <div class="col-xs-7">
+            <div class="field">
+            	<%= f.label :商品名 %>
+            	<%= f.text_field :name, class: "form ml-4 mb-3" %>
+            </div>
+            <div class="field">
+            	<%= f.label :商品説明 %>
+            	<%= f.text_area :introduction, class: 'ml-1' %>
+            </div>
+            <div class="field">
+            	<%= f.label :ジャンル %>
+            <%= f.collection_select :genre_id, @genres, :id, :name, class: 'ml-2' %>
+            </div>
+            <div class="field">
+            	<%= f.label :税抜価格 %>
+            	<%= f.text_field :price, class: 'ml-2 mb-3' %>
+            	円
+            </div>
+            <div class="field">
+            	<%= f.radio_button :is_active, true %>
+            	<%= f.label :is_active, "販売中" %>
+                <%= f.radio_button :is_active, false %>
+                <%= f.label :is_active, "売切れ" %>
+            </div>
+            <div class="actions col-xs-3 col-xs-offset-4">
+    	　　　　	<%= f.submit "変更を保存", class: "btn btn-success glyphicon glyphicon-save mt-3" %>
+            </div>
+        
+ </div>
+ <% end %>
+
+  </div>
+ </div>
+</div>

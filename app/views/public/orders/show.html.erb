@@ -1,0 +1,77 @@
+<div class="container">
+<div class="row">
+  <div class="col-sm-12 col-md-8 col-lg-8">
+  <h2>注文履歴詳細</h2>
+    <div class="row">
+     <div class="col-8"  style="margin-top: 50px;">
+        <h4>注文情報</h4>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td class="active">注文日</td>
+              <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+            </tr>
+            <tr>
+              <td class="active">配送先</td>
+              <td>
+                 <p><%= @order.postal_code %>&emsp;<%= @order.shipping_address %></p>
+                    <p><%= @order.name %></p>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">支払い方法</th>
+              <td><%= @order.method_payment_i18n %></td>
+            </tr>
+
+          </tbody>
+        </table>
+        </div>
+      </div>
+        <h4 style="margin-top: 50px;">注文内容</h4>
+        <table class="table table-bordered">
+          <thead>
+            <tr class="table-head" style="background-color:#F5F5F5;">
+              <th scope="col">商品</th>
+              <th scope="col">単価（税込）</th>
+              <th scope="col">個数</th>
+              <th scope="col">小計</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @sum = 0 %>
+            <% @ordered_items.each do |ordered_item| %>
+                <tr>
+                  <td><%= ordered_item.item.name %></td>
+                  <td><%= ordered_item.item.price %></td>
+                  <td><%= ordered_item.amount %></td>
+                  <td><%= ordered_item.item.price * ordered_item.amount %>
+                  <% @sum += ordered_item.item.price * ordered_item.amount %>
+                  </td>
+                </tr>
+              <% end %>
+          </tbody>
+        </table>
+    
+       </div>
+  <div class="col-4"  style="margin-top: 100px;">
+        <h4>請求情報</h4>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td class="active">商品合計</td>
+              <td><%= @sum %></td>
+            </tr>
+            <tr>
+              <td class="active">配送料</td>
+              <td><%= @order.postage %></td>
+            </tr>
+            <tr>
+              <td class="active">ご請求額</td>
+              <td><%= @sum + @order.postage %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+  
+    </div>

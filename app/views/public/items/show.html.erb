@@ -1,0 +1,40 @@
+<div class="container">
+ <div class="row">
+  <div class="col-sm-12col-md-8 col-lg-11 px-5 px-sm-0 mx-auto">
+
+
+
+<h1>商品詳細ページ</h1>
+ <% if @item.image.attached? %>
+  <%= image_tag @item.image, size: "200x150" %>
+  <% else %>
+  <%= image_tag 'no_image', size: "200x150" %>
+  <% end %> 
+<%= form_with model: @cart_item, url: cart_items_path, local: true do |f| %>
+<table class="table table-borderless">
+			<tr>
+				<th>商品名</th>
+				<th><%= @item.name %></th>
+			</tr>
+			<tr>
+				<th>商品説明</th>
+				<th><%= @item.introduction %></th>
+			</tr>
+		
+			<tr>
+				<th>税込価格（税抜価格）</th>
+				<th><%= (@item.price * 1.1).to_i %>(<%= @item.price %>)円</th>
+			</tr>
+			<tr>
+				<th><%= f.select :amount, *[1..10], include_blank: "--選択して下さい--" %></th>
+				<%= f.hidden_field :customer_id, value: current_customer.id %>
+				<%= f.hidden_field :item_id, value: @item.id %>
+			</tr>
+		
+		
+		</table>
+		<div>
+			<%= f.submit 'カートに入れる',class: "btn btn-success glyphicon glyphicon-wrench pull-right" %>
+			
+<% end %>
+  </div>

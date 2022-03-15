@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NaganoCake</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+ 
+     <nav class="navbar navbar-expand-lg">
+     <div class="container">
+
+     <span><%= link_to root_path, class: 'navbar-brand text-dark' do %>
+      <p class="h2 border rounded-lg">  LOGO  </p>
+          <% end %></span>
+     
+    
+
+    
+  <% if admin_signed_in? %>
+   <ul class= "navbar-nav ml-auto">
+      <li>
+      <%= link_to '/admin/items', class: "nav-link text-dark" do %>
+           <p class="border rounded-lg">商品一覧</p>
+          <% end %>
+      </li>
+      <li>
+          <%= link_to '/admin/customers', class: "nav-link text-dark" do %>
+           <p class="border rounded-lg">会員一覧</p>
+          <% end %>
+      </li>
+      <li>
+          <%= link_to admin_orders_path, class: "nav-link text-dark" do %>
+           <p class="border rounded-lg">注文履歴一覧</p>
+          <% end %>
+      </li>
+      
+      <li>
+          <%= link_to admin_genres_path, class: "nav-link text-dark" do %>
+           <p class="border rounded-lg">ジャンル一覧</p>
+          <% end %> 
+      </li>
+      <li>
+          <%= link_to destroy_admin_session_path, method: :delete, class: "nav-link text-dark" do %>
+           <p class="border rounded-lg">ログアウト</p>
+          <% end %> 
+      </li>
+      
+      </ul>
+  <% elsif customer_signed_in? %>
+  <ul class= "navbar-nav ml-auto">
+     <li>
+         <%= link_to customers_path, class: "nav-link text-dark" do %>
+           <p class="border rounded-lg">マイページ</p>
+          <% end %> 
+       
+     </li>
+     <li>
+            <%= link_to '/items', class: "nav-link text-dark" do %>
+           <p class="border rounded-lg">商品一覧</p>
+          <% end %> 
+     </li>
+     <li>
+            <%= link_to cart_items_path, class: "nav-link text-dark" do %>
+           <p class="border rounded-lg">カート</p>
+          <% end %> 
+     </li>
+     <li>
+            <%= link_to destroy_customer_session_path, method: :delete, class: "nav-link text-dark" do %>
+           <p class="border rounded-lg">ログアウト</p>
+          <% end %> 
+      </li>
+   
+   </ul>
+  <% else %>
+   <ul class= "navbar-nav ml-auto">
+     <li>
+        <%= link_to about_path, class: "nav-link text-dark" do %>
+        <p class="border rounded-lg">About</p>
+        <% end %>
+      </li>
+      <li>
+          <%= link_to '/admin/customers', class: "nav-link text-dark" do %>
+          <p class="border rounded-lg">商品一覧</p>
+          <% end %> 
+      </li>
+      <li>
+        　<%= link_to new_customer_registration_path, class: "nav-link text-dark" do %>
+          <p class="border rounded-lg">新規登録</p>
+          <% end %> 
+      <li>
+          <%= link_to new_customer_session_path, class: "nav-link text-dark" do %>
+          <p class="border rounded-lg">ログイン</p>
+          <% end %> 
+      </li>
+    </ul>
+   
+   <% end %>
+
+      </div>
+    </header>
+    <%= yield %>
+  </body>
+</html>
+
